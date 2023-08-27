@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/k0kubun/pp/v3"
 	"sync"
 	"sync/atomic"
 )
@@ -43,11 +42,11 @@ func ChSafeCounter() {
 	}
 }
 
-func main() {
-	wg.Add(2)
-	go ChSafeCounter()
-	go ChSafeCounter()
-	ch <- 0
-	wg.Wait()
-	pp.Println("counter = ", <-ch)
-}
+//func main() {
+//	wg.Add(2)
+//	go ChSafeCounter()
+//	go ChSafeCounter()
+//	ch <- 0
+//	wg.Wait()
+//	pp.Println("counter = ", <-ch)
+//}
