@@ -1,6 +1,10 @@
 package downloader
 
-import "net/http"
+import (
+	"encoding/json"
+	"io"
+	"net/http"
+)
 
 type InfoRequest struct {
 	Bvids []string
@@ -24,6 +28,20 @@ func BatchDownloadVideoInfo(request InfoRequest) (InfoResponse, error) {
 	for _, bvid := range request.Bvids {
 		var videoInfo VideoInfo
 		resp, err := http.Get("https://api.bilibili.com/x/web-interface/view?bvid=" + bvid)
-
+		if err != nil {
+			return InfoResponse{}, err
+		}
+		all, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return InfoResponse{}, err
+		}
+		if err = json.Unmarshal(all, &videoInfo); err != nil {
+			return InfoResponse{}, err
+		}
+		if err := resp.Body.Close(); err != nil {
+			return InfoResponse{}, err
+		}
+		response.Infos = append(response.Infos, videoInfo)
 	}
+	return response, nil
 }
