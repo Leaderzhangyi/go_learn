@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Go_pro/runner"
 	"fmt"
 	"time"
+	"tutorial/runner"
 )
 
 func createTask() func(int) {
