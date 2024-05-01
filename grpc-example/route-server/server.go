@@ -149,6 +149,8 @@ func main() {
 		log.Fatalln("cannot create a listener at the address")
 	}
 	grpcServer := grpc.NewServer()
+	// 这里说明下，因为上面自己定义的routeGuideServer已经完成了pb里面的所有方法，也相当于那个接口了，所以这里直接注册就可以了
+	// 这里的pb.RegisterRouteGuideServer(grpcServer, GetRouteSvc()) 就是将pb的接口注册到grpcServer中
 	pb.RegisterRouteGuideServer(grpcServer, GetRouteSvc())
 	log.Println("开始监听....")
 	log.Fatalln(grpcServer.Serve(listen))
