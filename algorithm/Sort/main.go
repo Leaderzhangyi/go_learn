@@ -13,11 +13,18 @@ type ArrSort interface {
 	QuickSort(low int, high int)
 	ShellSort()
 	HeapSort()
+	MergeSort() // 归并排序(外部)
+
 }
 
 type arrAtt struct {
 	arr  []int
 	size int
+}
+
+// MergeSort implements ArrSort.
+func (myarr *arrAtt) MergeSort() {
+	panic("unimplemented")
 }
 
 func (myarr *arrAtt) HeapSort() {
