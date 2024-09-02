@@ -42,7 +42,6 @@ func (myarr *arrAtt) HeapSort() {
 			if right < n && A[right] > A[largest] {
 				largest = right
 			}
-
 			if largest != i {
 				A[i], A[largest] = A[largest], A[i]
 				i = largest
@@ -59,7 +58,7 @@ func (myarr *arrAtt) HeapSort() {
 
 	for i := n - 1; i > 0; i-- {
 		myarr.arr[0], myarr.arr[i] = myarr.arr[i], myarr.arr[0]
-		HeapAdjust(myarr.arr, 0, i)
+		HeapAdjust(myarr.arr, 0, i) // 这里i表示剩下的堆大小，从0开始调整新的大根堆/小根堆
 	}
 
 	for i := 0; i < myarr.size; i++ {

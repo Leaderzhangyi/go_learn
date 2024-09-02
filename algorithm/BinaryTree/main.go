@@ -68,18 +68,33 @@ func PrintLeftAndRight(root *TreeNode) int {
 
 }
 
+func traverses(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	fmt.Printf("从节点 %v 进入节点 %v\n", root, root.Left)
+	traverses(root.Left)
+	fmt.Printf("从节点 %v 回到节点 %v\n", root.Left, root)
+
+	fmt.Printf("从节点 %v 进入节点 %v\n", root, root.Right)
+	traverses(root.Right)
+	fmt.Printf("从节点 %v 回到节点 %v\n", root.Right, root)
+
+}
+
 func main() {
 	arr := []int{1, 2, 4, -1, -1, 5, -1, -1, 3, -1, -1}
 	index := 0
 	root := BuildTree(arr, &index)
-	PreOrderTraversal(root)
-	fmt.Println()
+	// PreOrderTraversal(root)
+	// fmt.Println()
+	traverses(root)
 
 	// 最小高度
 	// mindepth := MinDepth(root)
 	// fmt.Println("最小高度:", mindepth)
-	PrintLevelOrder(root, 1)
-	PrintLeftAndRight(root)
+	// PrintLevelOrder(root, 1)
+	// PrintLeftAndRight(root)
 }
 
 //   1
