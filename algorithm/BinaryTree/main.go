@@ -81,20 +81,52 @@ func traverses(root *TreeNode) {
 	fmt.Printf("从节点 %v 回到节点 %v\n", root.Right, root)
 
 }
+func levelTraverse(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	q := make([]*TreeNode, 0)
+	q = append(q, root)
+	// fmt.Println(q)
+	result := make([]int, 0)
+
+	for len(q) > 0 {
+		sz := len(q)
+
+		for i := 0; i < sz; i++ {
+			cur := q[0]
+			q = q[1:]
+
+			result = append(result, cur.Val)
+			if cur.Left != nil {
+				q = append(q, cur.Left)
+
+			}
+			if cur.Right != nil {
+				q = append(q, cur.Right)
+			}
+		}
+	}
+	fmt.Printf("层序遍历:")
+	fmt.Println(result)
+
+}
 
 func main() {
 	arr := []int{1, 2, 4, -1, -1, 5, -1, -1, 3, -1, -1}
 	index := 0
 	root := BuildTree(arr, &index)
+	// sort.IntSlice()
 	// PreOrderTraversal(root)
 	// fmt.Println()
-	traverses(root)
+	// traverses(root)
 
 	// 最小高度
 	// mindepth := MinDepth(root)
 	// fmt.Println("最小高度:", mindepth)
 	// PrintLevelOrder(root, 1)
 	// PrintLeftAndRight(root)
+	levelTraverse(root)
 }
 
 //   1
