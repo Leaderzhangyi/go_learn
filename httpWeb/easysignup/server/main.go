@@ -13,7 +13,7 @@ const (
 
 func handleSignup(w http.ResponseWriter, r *http.Request) {
 	// Get the form data
-	name := r.FormValue("name")
+	name := r.FormValue("username")
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 	fmt.Println("Name: ", name)
