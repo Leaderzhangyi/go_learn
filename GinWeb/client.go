@@ -66,10 +66,50 @@ func testCookies() {
 	}
 	// 输出响应内容
 	fmt.Println(string(body))
+}
 
+func testJwtToken() {
+	resp, err := http.Get("http://localhost:10101/login")
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	// 读取响应内容
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应内容失败:", err)
+		return
+	}
+	// 输出响应内容
+	// fmt.Println(string(body))
+	// 获取token
+	token := string(body)
+
+	fmt.Println("token:", token)
+	// 发送带有token的请求
+	req, err := http.NewRequest("GET", "http://localhost:10101/postVideo", nil)
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Authorization", token)
+	// 发送请求
+	resp, err = http.DefaultClient.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	// 读取响应内容
+	body, err = io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应内容失败:", err)
+		return
+	}
+	// 输出响应内容
+	fmt.Println(string(body))
 }
 
 func main() {
 	// testVaildator()
-	testCookies()
+	// testCookies()
+	testJwtToken()
 }

@@ -1,12 +1,15 @@
 module tutorial
 
-go 1.21.9
+go 1.22
+
+toolchain go1.22.9
 
 require (
 	github.com/bytedance/sonic v1.9.1
 	github.com/emersion/go-imap/v2 v2.0.0-beta.2
 	github.com/emersion/go-message v0.18.1
 	github.com/gin-gonic/gin v1.9.1
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/k0kubun/pp v3.0.1+incompatible
 	github.com/k0kubun/pp/v3 v3.2.0
 	github.com/stretchr/testify v1.8.3
