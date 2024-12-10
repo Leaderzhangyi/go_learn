@@ -46,6 +46,7 @@ func postVideo(ctx *gin.Context) {
 
 func jwtAuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+
 		reqToken := ctx.GetHeader("Authorization")
 		if reqToken == "" {
 			ctx.JSON(http.StatusUnauthorized, gin.H{})
