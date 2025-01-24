@@ -1,6 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
+
+func testDefer() int {
+	i := 1
+	defer func() {
+		i++
+	}()
+	defer func() {
+		i++
+	}()
+	return i
+}
 
 func main() {
 	if true {
@@ -9,6 +22,9 @@ func main() {
 		defer fmt.Println(2)
 	}
 	defer fmt.Println(3)
+	defer fmt.Println(4)
+	defer fmt.Println(5)
+	// fmt.Println(testDefer())
 }
 
 // Output:
