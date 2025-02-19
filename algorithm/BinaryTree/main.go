@@ -17,7 +17,6 @@ func BuildTree(arr []int, index *int) *TreeNode {
 		*index++
 		return nil
 	}
-
 	root := &TreeNode{Val: arr[*index]}
 	*index++
 
