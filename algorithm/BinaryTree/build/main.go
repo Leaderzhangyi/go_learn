@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type TreeNode struct {
 	Val   int
@@ -93,13 +96,118 @@ func GetDepth2(root *TreeNode) int {
 
 }
 
+//	 1
+//	/  \
+//
+// 2   3
+// /    \
+// 4     5
+// 1、如果把根节点看做第 1 层，如何打印出每一个节点所在的层数？
+
+func PrintLevelOrder(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	var dfs func(root *TreeNode, level int)
+	dfs = func(root *TreeNode, level int) {
+		if root == nil {
+			return
+		}
+		fmt.Printf("Node %d is at level %d\n", root.Val, level)
+		dfs(root.Left, level+1)
+		dfs(root.Right, level+1)
+	}
+	dfs(root, 1)
+}
+
+// 2、如何打印出每个节点的左右子树各有多少节点？
+//
+//	 1
+//	/  \
+//
+// 2   3
+// /    \
+// 4     5
+func PrintNodeNum(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	left := PrintNodeNum(root.Left)
+	right := PrintNodeNum(root.Right)
+
+	fmt.Printf("Node %d has %d left child and %d right child\n", root.Val, left, right)
+	return 1 + left + right
+
+}
+
+// 记录最大直径的长度
+func diameterOfBinaryTree(root *TreeNode) int {
+	maxDiameter := 0
+
+	// 遍历二叉树
+	var traverse func(root *TreeNode)
+	traverse = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+		// 对每个节点计算直径
+		leftMax := maxDepth(root.Left)
+		rightMax := maxDepth(root.Right)
+		myDiameter := leftMax + rightMax
+		// 更新全局最大直径
+		maxDiameter = max(maxDiameter, myDiameter)
+
+		traverse(root.Left)
+		traverse(root.Right)
+	}
+	traverse(root)
+	return maxDiameter
+}
+func maxDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	leftMax := maxDepth(root.Left)
+	rightMax := maxDepth(root.Right)
+	return 1 + max(leftMax, rightMax)
+}
+
+// 	 1
+// 	/  \
+
+// 2   3
+// /    \
+// 4     5
+func binaryTreePaths(root *TreeNode) []string {
+	var res []string
+	var path []string
+	var dfs func(root *TreeNode)
+	dfs = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+		if root.Left == nil && root.Right == nil {
+			path = append(path, fmt.Sprintf("%d", root.Val))
+			res = append(res, strings.Join(path, "->"))
+			path = path[:len(path)-1]
+			return
+		}
+
+		path = append(path, fmt.Sprintf("%d", root.Val))
+		dfs(root.Left)
+		dfs(root.Right)
+		path = path[:len(path)-1]
+	}
+	dfs(root)
+	return res
+}
+
 func main() {
-	// arr := []int{1, 2, 4, -1, -1, 5, -1, -1, 3, -1, -1}
-	// index := 0
-	// root := buildTree2(arr, &index)
 	root := buildTree()
 	// PrintTree(root)
-	depth := GetDepth2(root)
-	fmt.Println(depth)
+	// PrintNodeNum(root)
+	// fmt.Println(diameterOfBinaryTree(root))
+	fmt.Println(binaryTreePaths(root))
 
 }
